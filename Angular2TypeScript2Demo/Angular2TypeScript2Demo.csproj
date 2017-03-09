@@ -75,10 +75,7 @@
     <Content Include=".travis.yml" />
     <Content Include="bs-config.e2e.json" />
     <Content Include="bs-config.json" />
-    <Content Include="CHANGELOG.md" />
-    <Content Include="LICENSE" />
     <Content Include="package.json" />
-    <Content Include="README.md" />
     <Content Include="tslint.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
