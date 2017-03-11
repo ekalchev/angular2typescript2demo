@@ -70,9 +70,11 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="e2e\tsconfig.json" />
+    <TypeScriptCompile Include="src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="src\app\customer.ts" />
+    <Content Include="src\app\app.styles.css" />
     <Content Include="src\tsconfig.json" />
     <Content Include=".editorconfig" />
-    <Content Include=".travis.yml" />
     <Content Include="bs-config.e2e.json" />
     <Content Include="bs-config.json" />
     <Content Include="package.json" />
@@ -88,8 +90,6 @@
     <Content Include=".gitignore" />
     <Content Include="karma-test-shim.js" />
     <Content Include="karma.conf.js" />
-    <Content Include="non-essential-files.osx.txt" />
-    <Content Include="non-essential-files.txt" />
     <Content Include="protractor.config.js" />
     <Content Include="src\favicon.ico" />
     <Content Include="src\index.html" />
@@ -103,9 +103,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="e2e\app.e2e-spec.ts" />
-    <TypeScriptCompile Include="src\app\app.component.spec.ts" />
+    <Content Include="src\app\app.component.html" />
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
+    <TypeScriptCompile Include="src\app\details.component.ts" />
     <TypeScriptCompile Include="src\main.ts" />
   </ItemGroup>
   <ItemGroup>

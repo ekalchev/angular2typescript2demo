@@ -1,0 +1,15 @@
+<h1>{{ title }}</h1>
+<ul>
+    <li *ngFor="let customer of customers">
+        <span>{{ customer.firstName }}</span>
+        <span>{{ customer.lastName }}</span>
+    </li>
+</ul>
+<details-component *ngIf="selectedCustomer" [customer]="selectedCustomer"></details-component>
+<input #inputBox (blur)="0"/>
+<button (click)="onSubmitClick()">Submit</button>
+{{ inputBox.value }}
+<nav>
+    <a routerLink="/demo" routerLinkActive="active">Demo</a>
+</nav>
+<router-outlet></router-outlet>
