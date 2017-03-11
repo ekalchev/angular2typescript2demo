@@ -71,7 +71,13 @@
     <Content Include="packages.config" />
     <Content Include="e2e\tsconfig.json" />
     <TypeScriptCompile Include="src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="src\app\grid-cell-edit.component.ts" />
+    <TypeScriptCompile Include="src\app\grid-cell.component.ts" />
+    <TypeScriptCompile Include="src\app\grid-row.component.ts" />
+    <TypeScriptCompile Include="src\app\mock-customers.ts" />
     <TypeScriptCompile Include="src\app\customer.ts" />
+    <Content Include="src\app\grid-row.component.html" />
+    <Content Include="src\app\grid.component.html" />
     <Content Include="src\app\app.styles.css" />
     <Content Include="src\tsconfig.json" />
     <Content Include=".editorconfig" />
@@ -106,7 +112,10 @@
     <Content Include="src\app\app.component.html" />
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
+    <TypeScriptCompile Include="src\app\data.service.ts" />
+    <TypeScriptCompile Include="src\app\grid.component.ts" />
     <TypeScriptCompile Include="src\app\details.component.ts" />
+    <TypeScriptCompile Include="src\app\set-focus.directive.ts" />
     <TypeScriptCompile Include="src\main.ts" />
   </ItemGroup>
   <ItemGroup>

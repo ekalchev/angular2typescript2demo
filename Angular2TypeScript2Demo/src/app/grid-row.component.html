@@ -1,0 +1,9 @@
+<div class="col-xs-4">
+    <grid-cell-component [model]="customer" [value]="'firstName'" [enableEditMode]="true"></grid-cell-component>
+</div>
+<div class="col-xs-4">
+    <grid-cell-component [model]="customer" [value]="'lastName'" [enableEditMode]="true"></grid-cell-component>
+</div>
+<div class="col-xs-4">
+    <button (click)="delete()" class="btn btn-default">Delete</button>
+</div>

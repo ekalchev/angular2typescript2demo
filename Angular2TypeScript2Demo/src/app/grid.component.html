@@ -1,0 +1,6 @@
+<div class="container">
+    <div class="row" *ngFor="let customer of customers | async">
+        <grid-row-component [customer]="customer" (deleteRequest)="deleteCustomer($event)"></grid-row-component>
+    </div>
+    <button (click)="addCustomer()" class="btn btn-default">Add Customer</button>
+</div>

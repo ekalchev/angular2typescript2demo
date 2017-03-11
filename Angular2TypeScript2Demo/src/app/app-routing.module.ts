@@ -3,9 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { DetailsComponent } from './details.component'
+import { GridComponent } from './grid.component'
 
 const routes: Routes = [
-    { path: "demo", component: AppComponent }
+    { path: "demo", component: GridComponent }
 ];
 
 
@@ -19,4 +20,4 @@ export class AppRoutingModule {
 
 }
 
-export const routingComponents = [AppComponent, DetailsComponent];
+export const routingComponents = [AppComponent, GridComponent, DetailsComponent];
