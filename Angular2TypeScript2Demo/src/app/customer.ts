@@ -24,6 +24,7 @@ export class Customer {
     firstName: string;
     lastName: string;
     address?: Address;
+    birthDate: string;
     shoppingBag: ShoppingBag
     files?: CustomerFile[]
 }

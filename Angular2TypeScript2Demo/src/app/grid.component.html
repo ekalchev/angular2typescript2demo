@@ -1,6 +1,11 @@
 <div class="container">
-    <div class="row" *ngFor="let customer of customers | async">
-        <grid-row-component [customer]="customer" (deleteRequest)="deleteCustomer($event)"></grid-row-component>
-    </div>
+    <data-table [data]="customers">
+        <column-definition field="firstName" title="First Name">
+        </column-definition>
+        <column-definition field="lastName" title="Last Name">
+        </column-definition>
+        <column-definition field="birthDate" title="Birth Date" data-type="date">
+        </column-definition>
+    </data-table>
     <button (click)="addCustomer()" class="btn btn-default">Add Customer</button>
 </div>

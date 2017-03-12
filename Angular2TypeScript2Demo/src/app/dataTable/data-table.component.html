@@ -1,0 +1,17 @@
+<table class="table table-bordered">
+    <thead>
+        <tr class="table-header">
+            <th *ngFor="let column of columns">
+                {{ column.title }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let dataItem of data | async">
+            <td *ngFor="let column of columns">
+                <data-table-cell [dataItem]="dataItem" [field]="column.field" [dataType]="column.dataType">
+                </data-table-cell>
+            </td>
+        </tr>
+    </tbody>
+</table>
