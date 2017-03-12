@@ -102,7 +102,7 @@ export class TexboxCellComponent extends DynamicComponent {
     selector: 'data-table-cell',
     entryComponents: [TexboxCellComponent, DateComponent], // Reference to the components must be here in order to dynamically create them
     template: `<div (click)="onCellClicked($event)" *ngIf="!isInEditMode && !isCommandColumn" class="display-cell">{{ index(dataItem, field) }}</div>
-                <div #editableCellContainer></div><button *ngIf="isCommandColumn" (click)="onDeleteClicked()">Delete</button>`
+                <div #editableCellContainer></div><button class="btn" *ngIf="isCommandColumn" (click)="onDeleteClicked()">Delete</button>`
 })
 export class DataTableCellComponent {
     @ViewChild('editableCellContainer', { read: ViewContainerRef }) editableCellContainer: ViewContainerRef;
