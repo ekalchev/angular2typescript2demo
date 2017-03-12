@@ -14,7 +14,8 @@
     ComponentFactoryResolver,
     EventEmitter,
     ComponentRef,
-    Injector
+    Injector,
+    Output
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -29,7 +30,8 @@ export class DataTableColumnDefinition {
         @Attribute('field') public field: string,
         @Attribute('title') public title: string,
         @Attribute('data-type') public dataType: string,
-        @Attribute('editable') public editable: string) {
+        @Attribute('editable') public editable: string,
+        @Attribute('command') public command: string) {
     }
 }
 
@@ -99,8 +101,8 @@ export class TexboxCellComponent extends DynamicComponent {
 @Component({
     selector: 'data-table-cell',
     entryComponents: [TexboxCellComponent, DateComponent], // Reference to the components must be here in order to dynamically create them
-    template: `<div (click)="onCellClicked($event)" *ngIf="!isInEditMode" class="display-cell">{{ index(dataItem, field) }}</div>
-                <div #editableCellContainer></div>`
+    template: `<div (click)="onCellClicked($event)" *ngIf="!isInEditMode && !isCommandColumn" class="display-cell">{{ index(dataItem, field) }}</div>
+                <div #editableCellContainer></div><button *ngIf="isCommandColumn" (click)="onDeleteClicked()">Delete</button>`
 })
 export class DataTableCellComponent {
     @ViewChild('editableCellContainer', { read: ViewContainerRef }) editableCellContainer: ViewContainerRef;
@@ -114,6 +116,25 @@ export class DataTableCellComponent {
 
     @Input()
     dataType: string;
+
+    @Input()
+    command: string;
+
+    @Input()
+    @Output()
+    onDelete: EventEmitter<any>;
+
+    ngAfterViewInit() {
+        var a = 1;
+    }
+
+    get isCommandColumn(): Boolean {
+        return this.command != null && this.command.toLowerCase() === "delete";
+    }
+
+    onDeleteClicked() {
+        this.onDelete.emit(this.dataItem);
+    }
 
     dynamicComponentEventChannel: Subject<DynamicComponentEventArgs> = new Subject();
 
@@ -222,6 +243,9 @@ export class DataTableCellComponent {
 export class DataTableComponent implements AfterViewInit {
     @Input()
     data: Observable<any[]>;
+
+    @Output() onDelete: EventEmitter<any> = new EventEmitter();
+
     @ContentChildren(DataTableColumnDefinition) columnsDefinitions: QueryList<DataTableColumnDefinition>;
     columns: any[] = [];
 
