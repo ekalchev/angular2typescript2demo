@@ -136,7 +136,7 @@ export class DataTableCellComponent {
     }
 
     onCellClicked(event: MouseEvent) {
-        if (this.editable) {
+        if (this.editable === "true") {
             this.editMode = true;
             if (this.currentComponent) {
                 this.currentComponent.destroy();
@@ -158,9 +158,9 @@ export class DataTableCellComponent {
 
     private editMode: Boolean = false;
     @Input()
-    private editable: Boolean = false;
+    private editable: string;
     get isInEditMode() {
-        return this.editable && this.editMode;
+        return this.editable === "true" && this.editMode;
     }
 
     // component: Class for the component you want to create
