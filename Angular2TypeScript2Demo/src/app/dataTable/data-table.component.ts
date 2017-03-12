@@ -28,7 +28,8 @@ export class DataTableColumnDefinition {
     constructor(
         @Attribute('field') public field: string,
         @Attribute('title') public title: string,
-        @Attribute('data-type') public dataType: string) {
+        @Attribute('data-type') public dataType: string,
+        @Attribute('editable') public editable: string) {
     }
 }
 
@@ -55,6 +56,11 @@ class DynamicComponent {
     protected value: any;
     protected closing: Boolean = false;
 
+    constructor(protected injector: Injector) {
+        this.parentNotification = this.injector.get('eventChannel');
+        this.value = this.injector.get('value');
+    }
+
     onEditCompleted() {
         if (this.parentNotification && !this.closing) {
             this.closing = true;
@@ -76,9 +82,7 @@ class DynamicComponent {
 })
 export class DateComponent extends DynamicComponent {
     constructor(protected injector: Injector) {
-        super();
-        this.parentNotification = this.injector.get('eventChannel');
-        this.value = this.injector.get('value');
+        super(injector);
     }
 }
 
@@ -88,16 +92,14 @@ export class DateComponent extends DynamicComponent {
 })
 export class TexboxCellComponent extends DynamicComponent {
     constructor(protected injector: Injector) {
-        super();
-        this.parentNotification = this.injector.get('eventChannel');
-        this.value = this.injector.get('value');
+        super(injector);
     }
 }
 
 @Component({
     selector: 'data-table-cell',
     entryComponents: [TexboxCellComponent, DateComponent], // Reference to the components must be here in order to dynamically create them
-    template: `<div (click)="onCellClicked($event)" *ngIf="!isInEditMode" class="display-cell">{{ dataItem[field] }}</div>
+    template: `<div (click)="onCellClicked($event)" *ngIf="!isInEditMode" class="display-cell">{{ index(dataItem, field) }}</div>
                 <div #editableCellContainer></div>`
 })
 export class DataTableCellComponent {
@@ -122,9 +124,9 @@ export class DataTableCellComponent {
                 setTimeout(() => this.currentComponent.destroy());
                 this.editMode = false;
             }
-            
+
             if (eventArgs.eventType !== DynamicComponentEventType.Canceled) {
-                this.dataItem[this.field] = eventArgs.value;
+                this.index(this.dataItem, this.field, eventArgs.value);
             }
         });
     }
@@ -134,28 +136,31 @@ export class DataTableCellComponent {
     }
 
     onCellClicked(event: MouseEvent) {
-        this.editMode = true;
-        if (this.currentComponent) {
-            this.currentComponent.destroy();
-        }
-
-        let componentType:any = TexboxCellComponent;
-        if (this.dataType && this.dataType === "date") {
-            componentType = DateComponent;
-        }
-
-        this.createDynamicComponent({
-            component: componentType, inputs: {
-                eventChannel: this.dynamicComponentEventChannel,
-                value: this.dataItem[this.field]
+        if (this.editable) {
+            this.editMode = true;
+            if (this.currentComponent) {
+                this.currentComponent.destroy();
             }
-        });
+
+            let componentType: any = TexboxCellComponent;
+            if (this.dataType && this.dataType === "date") {
+                componentType = DateComponent;
+            }
+
+            this.createDynamicComponent({
+                component: componentType, inputs: {
+                    eventChannel: this.dynamicComponentEventChannel,
+                    value: this.index(this.dataItem, this.field)
+                }
+            });
+        }
     }
 
     private editMode: Boolean = false;
-    private allowEdit: Boolean = true;
+    @Input()
+    private editable: Boolean = false;
     get isInEditMode() {
-        return this.allowEdit && this.editMode;
+        return this.editable && this.editMode;
     }
 
     // component: Class for the component you want to create
@@ -187,6 +192,26 @@ export class DataTableCellComponent {
         }
 
         this.currentComponent = component;
+    }
+
+    private index(obj: any, is: any, value?: any): any {
+        if (typeof obj === 'undefined') {
+            return undefined;
+        }
+
+        if (typeof is == 'string')
+            return this.index(obj, is.split('.'), value);
+        else if (is.length == 1 && value !== undefined)
+            return obj[is[0]] = value;
+        else if (is.length == 0)
+            return obj;
+        else {
+            // if we are setting value and the property is missing create one
+            if (value !== undefined && typeof obj[is[0]] === 'undefined' && is.length > 1) {
+                obj[is[0]] = {}
+            }
+            return this.index(obj[is[0]], is.slice(1), value);
+        }
     }
 }
 

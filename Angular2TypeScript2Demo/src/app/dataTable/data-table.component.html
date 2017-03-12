@@ -9,7 +9,11 @@
     <tbody>
         <tr *ngFor="let dataItem of data | async">
             <td *ngFor="let column of columns">
-                <data-table-cell [dataItem]="dataItem" [field]="column.field" [dataType]="column.dataType">
+                <data-table-cell 
+                                 [dataItem]="dataItem" 
+                                 [field]="column.field" 
+                                 [dataType]="column.dataType"
+                                 [editable]="column.editable">
                 </data-table-cell>
             </td>
         </tr>

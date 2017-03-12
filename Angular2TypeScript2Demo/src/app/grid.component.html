@@ -1,10 +1,12 @@
 <div class="container">
     <data-table [data]="customers">
-        <column-definition field="firstName" title="First Name">
+        <column-definition field="firstName" title="First Name" editable="true">
         </column-definition>
-        <column-definition field="lastName" title="Last Name">
+        <column-definition field="lastName" title="Last Name" editable="true">
         </column-definition>
-        <column-definition field="birthDate" title="Birth Date" data-type="date">
+        <column-definition field="birthDate" title="Birth Date" data-type="date" editable="true">
+        </column-definition>
+        <column-definition field="address.city" title="City" editable="true">
         </column-definition>
     </data-table>
     <button (click)="addCustomer()" class="btn btn-default">Add Customer</button>
