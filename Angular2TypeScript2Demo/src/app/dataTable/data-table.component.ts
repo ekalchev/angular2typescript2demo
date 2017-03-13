@@ -33,6 +33,10 @@ export class DataTableColumnDefinition {
         @Attribute('editable') public editable: string,
         @Attribute('command') public command: string) {
     }
+
+    @Input()
+    @Output()
+    onDelete: EventEmitter<any> = new EventEmitter();
 }
 
 enum DynamicComponentEventType {
@@ -70,7 +74,7 @@ class DynamicComponent {
         }
     }
 
-    onEditCancel() {
+    onEditCanceled() {
         if (this.parentNotification && !this.closing) {
             this.closing = true;
             this.parentNotification.next({ eventType: DynamicComponentEventType.Canceled, value: this.value });
@@ -80,7 +84,7 @@ class DynamicComponent {
 
 @Component({
     selector: 'date-cell',
-    template: `<input type="date" [(ngModel)]="value" (blur)="onEditCompleted()" (keyup.escape)="onEditCancel()" (keyup.enter)="onEditCompleted()" setFocus />`
+    template: `<input type="date" [(ngModel)]="value" (blur)="onEditCompleted()" (keyup.escape)="onEditCanceled()" (keyup.enter)="onEditCompleted()" setFocus />`
 })
 export class DateComponent extends DynamicComponent {
     constructor(protected injector: Injector) {
@@ -90,7 +94,7 @@ export class DateComponent extends DynamicComponent {
 
 @Component({
     selector: 'textbox-cell',
-    template: `<input (keyup.enter)="onEditCompleted()" (blur)="onEditCompleted()" (keyup.escape)="onEditCancel()" [(ngModel)]="value" class="form-control" setFocus />`
+    template: `<input (keyup.enter)="onEditCompleted()" (blur)="onEditCompleted()" (keyup.escape)="onEditCanceled()" [(ngModel)]="value" class="form-control" setFocus />`
 })
 export class TexboxCellComponent extends DynamicComponent {
     constructor(protected injector: Injector) {
