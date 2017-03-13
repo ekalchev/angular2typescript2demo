@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'
 
 import { AppComponent } from './app.component';
-import { DataTableComponent, DataTableColumnDefinition, DataTableCellComponent, TexboxCellComponent, DateComponent } from './dataTable/data-table.component';
+import { DataTableComponent, DataTableColumnDefinition, DataTableCellComponent, TexboxCellComponent, DateComponent, DataTableRowComponent } from './dataTable/data-table.component';
 import { AppRoutingModule, routingComponents } from './app-routing.module'
 import { DataService } from './data.service';
 import { SetFocusDirective } from './set-focus.directive';
@@ -16,6 +16,7 @@ import { SetFocusDirective } from './set-focus.directive';
         DataTableColumnDefinition,
         DataTableCellComponent,
         TexboxCellComponent,
+        DataTableRowComponent,
         DateComponent,
         SetFocusDirective,
         routingComponents],

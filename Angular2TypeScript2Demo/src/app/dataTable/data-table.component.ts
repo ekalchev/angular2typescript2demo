@@ -14,6 +14,7 @@
     ComponentFactoryResolver,
     EventEmitter,
     ComponentRef,
+    ViewChildren,
     Injector,
     Output
 } from '@angular/core';
@@ -241,20 +242,65 @@ export class DataTableCellComponent {
 }
 
 @Component({
+    selector: '[data-table-row]',
+    template: `
+            <td *ngFor="let column of columns">
+                <data-table-cell [dataItem]="dataItem"
+                                 [field]="column.field"
+                                 [dataType]="column.dataType"
+                                 [editable]="column.editable"
+                                 [command]="column.command"
+                                 [onDelete]="column.onDelete">
+                </data-table-cell>
+            </td>`
+})
+export class DataTableRowComponent {
+    @Input()
+    dataItem: any;
+
+    @Input()
+    columns: DataTableColumnDefinition[];
+
+    @Input()
+    dataTableContext: DataTableContext;
+
+    selected: Boolean = false;
+
+    onClick() {
+        this.dataTableContext.onRowSelected.next(this);
+    }
+}
+
+class DataTableContext {
+    onRowSelected: Subject<DataTableRowComponent> = new Subject();
+}
+
+@Component({
     selector: 'data-table',
     templateUrl: "app/dataTable/data-table.component.html"
 })
-export class DataTableComponent implements AfterViewInit {
+export class DataTableComponent {
     @Input()
     data: Observable<any[]>;
-
-    @Output() onDelete: EventEmitter<any> = new EventEmitter();
+    context: DataTableContext = new DataTableContext();
 
     @ContentChildren(DataTableColumnDefinition) columnsDefinitions: QueryList<DataTableColumnDefinition>;
+    @ViewChildren(DataTableRowComponent) dataTableRows: QueryList<DataTableRowComponent>;
+
     columns: any[] = [];
 
-    ngAfterViewInit() {
+    ngAfterViewChecked() {
         this.columns = this.columnsDefinitions.toArray();
+        this.context.onRowSelected.subscribe((selectedRow: DataTableRowComponent) => {
+            this.dataTableRows.forEach((row) => {
+                row.selected = false
+            });
+            selectedRow.selected = true;
+        });
+    }
+
+    ngOnDestroy() {
+        this.context.onRowSelected.unsubscribe();
     }
 }
 

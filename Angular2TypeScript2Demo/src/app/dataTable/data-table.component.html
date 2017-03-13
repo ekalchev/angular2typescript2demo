@@ -7,17 +7,13 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let dataItem of data | async">
-            <td *ngFor="let column of columns">
-                <data-table-cell 
-                                 [dataItem]="dataItem" 
-                                 [field]="column.field" 
-                                 [dataType]="column.dataType"
-                                 [editable]="column.editable"
-                                 [command]="column.command"
-                                 [onDelete]="column.onDelete">
-                </data-table-cell>
-            </td>
+        <tr data-table-row *ngFor="let dataItem of data | async" #row
+            (click)="row.onClick()"
+            [ngClass]="{'active': row.selected }"
+            [columns]="columns"
+            [dataItem]="dataItem"
+            [dataTableContext]="context"
+            >
         </tr>
     </tbody>
 </table>
