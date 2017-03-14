@@ -71,7 +71,9 @@
     <Content Include="packages.config" />
     <Content Include="e2e\tsconfig.json" />
     <TypeScriptCompile Include="src\app\app-routing.module.ts" />
+    <TypeScriptCompile Include="src\app\dataTable\data-table.module.ts" />
     <TypeScriptCompile Include="src\app\dataTable\data-table.component.ts" />
+    <TypeScriptCompile Include="src\app\dataTable\set-focus.directive.ts" />
     <TypeScriptCompile Include="src\app\mock-customers.ts" />
     <TypeScriptCompile Include="src\app\customer.ts" />
     <Content Include="src\app\dataTable\data-table.component.html" />
