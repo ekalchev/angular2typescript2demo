@@ -151,7 +151,8 @@ export class DataTableCellComponent {
         this.dynamicComponentEventChannel.subscribe((eventArgs: DynamicComponentEventArgs) => {
             if (eventArgs.eventType === DynamicComponentEventType.Closed
                 || eventArgs.eventType === DynamicComponentEventType.Canceled) {
-                setTimeout(() => this.currentComponent.destroy());
+                //setTimeout(() => this.currentComponent.destroy());
+                this.currentComponent.destroy()
                 this.editMode = false;
             }
 
