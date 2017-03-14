@@ -32,7 +32,8 @@ export class DataTableColumnDefinition {
         @Attribute('title') public title: string,
         @Attribute('data-type') public dataType: string,
         @Attribute('editable') public editable: string,
-        @Attribute('command') public command: string) {
+        @Attribute('command') public command: string,
+        @Attribute('width') public width: string) {
     }
 
     @Input()
@@ -124,6 +125,9 @@ export class DataTableCellComponent {
 
     @Input()
     command: string;
+
+    @Input()
+    width: string;
 
     @Input()
     @Output()
@@ -244,13 +248,14 @@ export class DataTableCellComponent {
 @Component({
     selector: '[data-table-row]',
     template: `
-            <td *ngFor="let column of columns">
+            <td *ngFor="let column of columns" [style.width.%]="column.width">
                 <data-table-cell [dataItem]="dataItem"
                                  [field]="column.field"
                                  [dataType]="column.dataType"
                                  [editable]="column.editable"
                                  [command]="column.command"
-                                 [onDelete]="column.onDelete">
+                                 [onDelete]="column.onDelete"
+                                 >
                 </data-table-cell>
             </td>`
 })
