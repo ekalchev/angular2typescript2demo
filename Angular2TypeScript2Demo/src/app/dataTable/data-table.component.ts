@@ -20,6 +20,8 @@
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+
 import 'rxjs/Rx'
 
 @Component({
@@ -290,6 +292,8 @@ export class DataTableComponent {
     data: Observable<any[]>;
     context: DataTableContext = new DataTableContext();
 
+    rowSelectedSubscription: Subscription;
+
     @ContentChildren(DataTableColumnDefinition) columnsDefinitions: QueryList<DataTableColumnDefinition>;
     @ViewChildren(DataTableRowComponent) dataTableRows: QueryList<DataTableRowComponent>;
 
@@ -297,7 +301,7 @@ export class DataTableComponent {
 
     ngAfterViewChecked() {
         this.columns = this.columnsDefinitions.toArray();
-        this.context.onRowSelected.subscribe((selectedRow: DataTableRowComponent) => {
+        this.rowSelectedSubscription = this.context.onRowSelected.subscribe((selectedRow: DataTableRowComponent) => {
             this.dataTableRows.forEach((row) => {
                 row.selected = false
             });
@@ -306,7 +310,7 @@ export class DataTableComponent {
     }
 
     ngOnDestroy() {
-        this.context.onRowSelected.unsubscribe();
+        this.rowSelectedSubscription.unsubscribe();
     }
 }
 
